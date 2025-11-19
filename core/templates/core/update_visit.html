@@ -1,0 +1,114 @@
+{% extends 'core/base.html' %} {% block content %}
+
+<style>
+    /* 🌈 Background and Layout */
+    
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+        color: #333;
+    }
+    
+    main {
+        max-width: 720px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: #ffffffdd;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        animation: fadeIn 0.6s ease-in-out;
+    }
+    /* 🧾 Heading */
+    
+    h2 {
+        text-align: center;
+        color: #00796b;
+        margin-bottom: 25px;
+        font-size: 26px;
+    }
+    /* 🧍 Patient Info Card */
+    
+    .patient-info {
+        background-color: #e0f2f1;
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .patient-info p {
+        font-size: 16px;
+        margin: 6px 0;
+        color: #004d40;
+    }
+    /* 📝 Form Styling */
+    
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+    
+    form label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #004d40;
+    }
+    
+    form textarea,
+    form input,
+    form select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 15px;
+        width: 100%;
+        background-color: #fff;
+    }
+    
+    form button {
+        background-color: #00796b;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    form button:hover {
+        background-color: #004d40;
+    }
+    /* ✨ Animation */
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<main>
+    <h2>📝 Update Visit Record</h2>
+
+    <!-- 👤 Patient Info -->
+    <div class="patient-info">
+        <p><strong>👤 Patient:</strong> {{ visit.patient.get_full_name }}</p>
+        <p><strong>📅 Date:</strong> {{ visit.visit_date }}</p>
+    </div>
+
+    <!-- 🧾 Visit Form -->
+    <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">💾 Save Changes</button>
+    </form>
+</main>
+
+{% endblock %}

@@ -1,0 +1,247 @@
+{% extends 'core/base.html' %} {% load static %} {% block content %}
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+        color: #333;
+    }
+    
+    main {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: #ffffffdd;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        animation: fadeIn 0.6s ease-in-out;
+    }
+    
+    h2 {
+        text-align: center;
+        color: #00796b;
+        margin-bottom: 30px;
+        font-size: 28px;
+    }
+    
+    .section-card {
+        margin: 30px 0;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .video-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    
+    .alert-card {
+        background: linear-gradient(135deg, #b2dfdb 0%, #80cbc4 100%);
+        color: #004d40;
+    }
+    
+    .section-card h3 {
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 22px;
+    }
+    
+    .section-card p {
+        text-align: center;
+        font-size: 14px;
+    }
+    
+    .section-card a,
+    .section-card button {
+        display: inline-block;
+        margin: 5px;
+        padding: 10px 20px;
+        font-size: 15px;
+        font-weight: bold;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: transform 0.2s ease;
+    }
+    
+    .section-card a:hover,
+    .section-card button:hover {
+        transform: scale(1.05);
+    }
+    
+    .upload-btn {
+        background-color: white;
+        color: #667eea;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .my-videos-btn {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 2px solid white;
+    }
+    
+    .ack-btn {
+        background-color: #00796b;
+        color: white;
+    }
+    
+    .resolve-btn {
+        background-color: #4caf50;
+        color: white;
+    }
+    
+    .view-btn {
+        background-color: #2196f3;
+        color: white;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    
+    table th,
+    table td {
+        border: 1px solid #ccc;
+        padding: 12px;
+        text-align: left;
+    }
+    
+    table th {
+        background-color: #e0f2f1;
+        color: #004d40;
+    }
+    
+    table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    
+    table tr:hover {
+        background-color: #f1f8e9;
+    }
+    
+    hr {
+        margin: 40px 0;
+        border: none;
+        border-top: 1px solid #ccc;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<main>
+    <h2>🧑‍⚕️ Therapist Dashboard</h2>
+
+    <!-- 🎥 Exercise Videos Section -->
+    <div class="section-card video-card">
+        <h3>🎥 Exercise Video Library</h3>
+        <div style="text-align: center;">
+            <a href="{% url 'upload_exercise_video' %}" class="upload-btn">📤 Upload Video</a>
+            <a href="{% url 'therapist_videos' %}" class="my-videos-btn">📋 My Videos</a>
+        </div>
+        <p>Upload exercise demonstration videos for your patients to follow along</p>
+    </div>
+
+    <!-- 🧭 Emergency SOS Alerts Section -->
+    {% if active_sos_alerts %}
+    <div class="section-card alert-card">
+        <h3>🧭 Active Emergency Alerts</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>👤 Patient</th>
+                    <th>🕒 Time</th>
+                    <th>💬 Message</th>
+                    <th>⚙️ Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alert in active_sos_alerts %}
+                <tr>
+                    <td><strong>{{ alert.patient.get_full_name }}</strong><br><small>{{ alert.patient.unique_id }}</small></td>
+                    <td>{{ alert.created_at|date:"d M Y, H:i:s" }}</td>
+                    <td>{{ alert.message|default:"No message provided" }}</td>
+                    <td>
+                        <form method="post" action="{% url 'acknowledge_sos_alert' alert.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="ack-btn">✅ Acknowledge</button>
+                        </form>
+                        <form method="post" action="{% url 'resolve_sos_alert' alert.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="resolve-btn">✅ Resolve</button>
+                        </form>
+                        <a href="{% url 'view_patient_profile' alert.patient.unique_id %}" class="view-btn">👁️ View Profile</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %} {% if acknowledged_sos_alerts %}
+    <h3 style="color: #00796b;">✅ Acknowledged SOS Alerts</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>👤 Patient</th>
+                <th>🕒 Time</th>
+                <th>📌 Status</th>
+                <th>⚙️ Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for alert in acknowledged_sos_alerts %}
+            <tr>
+                <td>{{ alert.patient.get_full_name }}</td>
+                <td>{{ alert.created_at|date:"d M Y, H:i:s" }}</td>
+                <td>{{ alert.get_status_display }}</td>
+                <td>
+                    <form method="post" action="{% url 'resolve_sos_alert' alert.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="resolve-btn">✅ Resolve</button>
+                    </form>
+                    <a href="{% url 'view_patient_profile' alert.patient.unique_id %}" class="view-btn">👁️ View Profile</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <hr> {% endif %}
+
+    <!-- 👥 Patient List -->
+    <h3>👥 Patient List</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>👤 Name</th>
+                <th>🆔 Unique ID</th>
+                <th>📧 Email</th>
+                <th>👁️ Profile</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in patients %}
+            <tr>
+                <td>{{ patient.username }}</td>
+                <td>{{ patient.unique_id }}</td>
+                <td>{{ patient.email }}</td>
+                <td><a href="{% url 'view_patient_profile' patient.unique_id %}" class="view-btn">👁️ View Profile</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+
+{% endblock %}

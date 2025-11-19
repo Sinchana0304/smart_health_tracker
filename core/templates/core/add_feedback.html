@@ -1,0 +1,120 @@
+{% extends 'core/base.html' %} {% block content %}
+
+<!-- 🌟 Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<style>
+    /* 🌈 Background and Layout */
+    
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+        color: #333;
+    }
+    /* 📦 Container */
+    
+    main {
+        max-width: 600px;
+        margin: auto;
+        padding: 30px;
+        background-color: #ffffffdd;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+        animation: fadeIn 0.6s ease-in-out;
+    }
+    /* ✨ Animation */
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    /* 📝 Form Styling */
+    
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    form label {
+        font-weight: bold;
+        margin-top: 10px;
+    }
+    
+    form textarea,
+    form input,
+    form select {
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        transition: border-color 0.3s;
+    }
+    
+    form textarea:focus,
+    form input:focus,
+    form select:focus {
+        border-color: #00796b;
+        outline: none;
+    }
+    
+    form button {
+        background-color: #00796b;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+    
+    form button:hover {
+        background-color: #004d40;
+    }
+    /* 🔗 Back Link */
+    
+    a {
+        display: inline-block;
+        margin-top: 20px;
+        color: #00796b;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 15px;
+    }
+    
+    a i {
+        margin-right: 6px;
+    }
+    
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<!-- 🧠 Feedback Header -->
+<h2 style="text-align: center; margin-bottom: 20px;">
+    <i class="fas fa-comment-dots" style="color:#00796b;"></i> Add Feedback for {{ task.task_name }}
+</h2>
+
+<main>
+    <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">
+        <i class="fas fa-paper-plane"></i> Submit Feedback
+      </button>
+    </form>
+
+    <a href="{% url 'view_patient_profile' task.patient.unique_id %}">
+        <i class="fas fa-arrow-left"></i> Back to Patient Profile
+    </a>
+</main>
+
+{% endblock %}
