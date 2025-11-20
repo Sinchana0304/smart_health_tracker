@@ -83,11 +83,10 @@ STATICFILES_DIRS = [BASE_DIR / 'core' / 'static']
 # Media files (for profile photo uploads)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-<<<<<<< HEAD
+
 DEBUG = True  # Required for serving media in development
 
-=======
->>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
+
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

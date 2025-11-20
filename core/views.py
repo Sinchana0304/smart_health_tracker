@@ -446,7 +446,7 @@ def complete_task(request, task_id):
         messages.warning(request, "Task is not currently in progress or already completed.")
 
     return redirect('patient_home') 
-<<<<<<< HEAD
+
 from django.shortcuts import render
 from django.utils import timezone
 from datetime import date, timedelta
@@ -484,8 +484,7 @@ def patient_profile(request):
         'unique_id': patient.unique_id,
     }
     return render(request, 'core/patient_profile.html', context)
-=======
->>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
+
 
 
 PatientLookupForm
@@ -903,7 +902,6 @@ def send_sos_alert(request):
         messages.error(request, "Access denied.")
         return redirect('login')
 
-<<<<<<< HEAD
 def send_sos_alert(request):
     if request.method == 'POST':
         message = request.POST.get('message')
@@ -919,22 +917,6 @@ def send_sos_alert(request):
 
     # ✅ Render SOS form page on GET
     return render(request, 'core/sos_alert.html')
-=======
-    if request.method == 'POST':
-        message = request.POST.get('message', '')
-        
-        # Create SOS alert
-        sos_alert = SOSAlert.objects.create(
-            patient=request.user,
-            message=message if message else None,
-            status='active'
-        )
-        
-        messages.success(request, "🚨 Emergency SOS alert sent to all doctors and therapists!")
-        return redirect('patient_home')
-    
-    return redirect('patient_home')
->>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
 
 @login_required
 def acknowledge_sos_alert(request, alert_id):
@@ -1077,8 +1059,7 @@ def watch_video(request, video_id):
         'video': video,
         'related_videos': related_videos,
     })
-<<<<<<< HEAD
-=======
+
 from datetime import date
 
 def calculate_age(born):
@@ -1086,25 +1067,72 @@ def calculate_age(born):
     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
 from .forms import PatientForm
+from .models import PatientTask  # Make sure Task is imported
+
+from .forms import PatientForm
+from .models import PatientTask, MoodLog, ImprovementScore
+
+def calculate_age(dob):
+    from datetime import date
+    today = date.today()
+    return today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+from django.db import models
+from .forms import PatientForm
+from .models import PatientTask, MoodLog, ImprovementScore
 def patient_profile(request):
-    ...
+    user = request.user
+
     if request.method == 'POST':
-        form = PatientForm(request.POST, request.FILES, instance=request.user)
+        form = PatientForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             user = form.save()
             dob = form.cleaned_data.get('date_of_birth')
             age = calculate_age(dob) if dob else None
-            ...
     else:
-        form = PatientForm(instance=request.user)
-        dob = request.user.date_of_birth
+        form = PatientForm(instance=user)
+        dob = user.date_of_birth
         age = calculate_age(dob) if dob else None
+
+    # ✅ Completed tasks
+    tasks = PatientTask.objects.filter(patient=user, completed_at__isnull=False).order_by('-completed_at')
+
+    # ✅ Mood logs
+    mood_logs = MoodLog.objects.filter(patient=user)
+
+    # ✅ Improvement scores
+    scores = ImprovementScore.objects.filter(patient=user)
+    avg_score = round(scores.aggregate(models.Avg('score'))['score__avg'] or 0, 2)
+
+    # ✅ Progress data for chart
+    progress_data = {
+        'task_count': tasks.count(),
+        'mood_summary': list(mood_logs),
+        'avg_score': avg_score,
+        'ai_summary': "You're making steady progress this week!"  # Optional summary
+    }
+
+    # ✅ Mood color logic (optional)
+    mood_color = "#2196f3"  # default blue
+    if mood_logs.exists():
+        latest_mood = mood_logs.latest('logged_at').mood
+        mood_color = {
+            "happy": "#4caf50",
+            "neutral": "#9e9e9e",
+            "sad": "#2196f3",
+            "anxious": "#ff5722",
+            "excited": "#ffeb3b",
+            "tired": "#795548"
+        }.get(latest_mood, "#2196f3")
 
     return render(request, 'core/patient_profile.html', {
         'form': form,
         'age': age,
+        'tasks': tasks,
+        'progress_data': progress_data,
+        'mood_color': mood_color,
+        'unique_id': user.unique_id,
     })
->>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
+
 
 @login_required
 def delete_video(request, video_id):
@@ -1125,7 +1153,7 @@ def delete_video(request, video_id):
         return redirect('therapist_videos')
     
     return render(request, 'core/delete_video.html', {'video': video})
-<<<<<<< HEAD
+
 from django.shortcuts import render
 def exercise_video_library(request):
     videos = ExerciseVideo.objects.all().order_by('-created_at')  # ✅ Correct field
@@ -1144,5 +1172,4 @@ def emergency_alerts_page(request):
         'active_sos_alerts': active_sos_alerts,
         'acknowledged_sos_alerts': acknowledged_sos_alerts,
     })
-=======
->>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
+

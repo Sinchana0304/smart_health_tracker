@@ -1,20 +1,5 @@
-<<<<<<< HEAD
-{% extends 'core/base.html' %}
-{% block content %}
 
-<style>
-    .form-container {
-        max-width: 800px;
-        margin: 30px auto;
-        padding: 30px;
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    .form-group {
-        margin-bottom: 20px;
-    }
-=======
+
 {% extends 'core/base.html' %} {% block content %}
 
 <style>
@@ -51,12 +36,12 @@
         margin-bottom: 20px;
     }
     
->>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
+
     label {
         display: block;
         margin-bottom: 8px;
         font-weight: bold;
-<<<<<<< HEAD
+
         color: #333;
     }
     input[type="text"], input[type="number"], textarea, select {
@@ -69,7 +54,7 @@
     textarea {
         resize: vertical;
     }
-=======
+
         color: #004d40;
     }
     
@@ -96,13 +81,13 @@
         color: #666;
     }
     
->>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
+
     .btn-primary {
         background-color: #00796b;
         color: white;
         padding: 12px 30px;
         border: none;
-<<<<<<< HEAD
+
         border-radius: 5px;
         cursor: pointer;
         font-size: 16px;
@@ -111,7 +96,7 @@
     .btn-primary:hover {
         background-color: #004d40;
     }
-=======
+
         border-radius: 6px;
         cursor: pointer;
         font-size: 16px;
@@ -123,23 +108,22 @@
         background-color: #004d40;
     }
     
->>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
+
     .btn-secondary {
         background-color: #6c757d;
         color: white;
         padding: 12px 30px;
         border: none;
-<<<<<<< HEAD
+
         border-radius: 5px;
-=======
+
         border-radius: 6px;
->>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
+
         cursor: pointer;
         text-decoration: none;
         display: inline-block;
         margin-left: 10px;
-<<<<<<< HEAD
-=======
+
         font-size: 15px;
     }
     
@@ -173,14 +157,14 @@
             opacity: 1;
             transform: translateY(0);
         }
->>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
+
     }
 </style>
 
 <div class="form-container">
     <h2>📹 Upload Exercise Video</h2>
     <p>Upload a video demonstration for your patients to follow along with exercises.</p>
-<<<<<<< HEAD
+
     
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -253,7 +237,7 @@
             {% endif %}
         </div>
         
-=======
+
 
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -311,14 +295,14 @@
             {% endif %}
         </div>
 
->>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
+
         <button type="submit" class="btn-primary">📤 Upload Video</button>
         <a href="{% url 'therapist_videos' %}" class="btn-secondary">Cancel</a>
     </form>
 </div>
 
 {% if messages %}
-<<<<<<< HEAD
+
     <ul class="messages" style="max-width: 800px; margin: 20px auto;">
         {% for message in messages %}
             <li style="padding: 10px; background: #d4edda; color: #155724; border-radius: 5px; margin-bottom: 10px;">{{ message }}</li>
@@ -328,11 +312,11 @@
 
 {% endblock %}
 
-=======
+
 <ul class="messages">
     {% for message in messages %}
     <li>{{ message }}</li>
     {% endfor %}
 </ul>
 {% endif %} {% endblock %}
->>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
+

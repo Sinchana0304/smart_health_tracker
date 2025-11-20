@@ -1,95 +1,105 @@
-<<<<<<< HEAD
 {% extends 'core/base.html' %}
+{% load static %}
 {% block content %}
 
 <!-- 🌟 Font Awesome for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to right, #e0f7fa, #f1f8e9);
-  color: #333;
-}
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+    color: #333;
+  }
 
-main {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 30px;
-  background-color: #ffffffdd;
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
+  main {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffffdd;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    animation: fadeIn 0.6s ease-in-out;
+  }
 
-h2 {
-  text-align: center;
-  color: #00796b;
-  margin-bottom: 25px;
-}
+  h2 {
+    text-align: center;
+    color: #00796b;
+    margin-bottom: 25px;
+  }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
 
-form label {
-  font-weight: bold;
-  margin-top: 10px;
-  color: #004d40;
-}
+  form label {
+    font-weight: bold;
+    margin-top: 10px;
+    color: #004d40;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-form input,
-form select {
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 15px;
-  background-color: #f9f9f9;
-}
+  form input,
+  form select {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    background-color: #f9f9f9;
+  }
 
-form button {
-  margin-top: 10px;
-  background-color: #00796b;
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
+  form button {
+    margin-top: 10px;
+    background-color: #00796b;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
 
-form button:hover {
-  background-color: #004d40;
-  transform: scale(1.03);
-}
+  form button:hover {
+    background-color: #004d40;
+    transform: scale(1.03);
+  }
 
-ul {
-  padding-left: 20px;
-  margin-bottom: 20px;
-}
+  ul {
+    padding-left: 20px;
+    margin-bottom: 20px;
+  }
 
-ul li {
-  color: red;
-  font-size: 14px;
-}
+  ul li {
+    color: red;
+    font-size: 14px;
+  }
 
-p a {
-  color: #00796b;
-  text-decoration: none;
-  font-weight: bold;
-}
+  p a {
+    color: #00796b;
+    text-decoration: none;
+    font-weight: bold;
+  }
 
-p a:hover {
-  text-decoration: underline;
-}
+  p a:hover {
+    text-decoration: underline;
+  }
 
-label i {
-  margin-right: 6px;
-  color: #00796b;
-}
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 </style>
 
 <main>
@@ -134,140 +144,6 @@ label i {
   <p style="text-align: center; margin-top: 20px;">
     Already have an account? <a href="{% url 'login' %}">Log in</a>
   </p>
-=======
-{% extends 'core/base.html' %} {% load static %} {% block content %}
-
-<style>
-    /* 🌈 Background and Layout */
-    
-    body {
-        margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        background: linear-gradient(to right, #e0f7fa, #f1f8e9);
-        color: #333;
-    }
-    
-    main {
-        max-width: 600px;
-        margin: 40px auto;
-        padding: 30px;
-        background-color: #ffffffdd;
-        border-radius: 12px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        animation: fadeIn 0.6s ease-in-out;
-    }
-    
-    main h2 {
-        text-align: center;
-        color: #00796b;
-        margin-bottom: 20px;
-    }
-    /* 📝 Form Styling */
-    
-    form {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    form label {
-        font-weight: bold;
-        margin-top: 12px;
-    }
-    
-    form input,
-    form select {
-        padding: 10px;
-        margin-top: 5px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-size: 15px;
-    }
-    
-    form button {
-        margin-top: 25px;
-        background-color: #00796b;
-        color: white;
-        padding: 12px;
-        border: none;
-        border-radius: 6px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    
-    form button:hover {
-        background-color: #004d40;
-    }
-    /* 🔴 Error Messages */
-    
-    ul {
-        padding-left: 20px;
-        margin-bottom: 20px;
-    }
-    
-    ul li {
-        color: red;
-        font-size: 14px;
-    }
-    /* 🔗 Login Link */
-    
-    p a {
-        color: #00796b;
-        text-decoration: none;
-        font-weight: bold;
-    }
-    
-    p a:hover {
-        text-decoration: underline;
-    }
-    /* ✨ Animation */
-    
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
-
-<main>
-    <h2>📝 Register</h2>
-
-    {% if form.errors %}
-    <ul>
-        {% for field in form %} {% for error in field.errors %}
-        <li><strong>{{ field.label }}:</strong> {{ error }}</li>
-        {% endfor %} {% endfor %} {% for error in form.non_field_errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-
-    <form method="post">
-        {% csrf_token %}
-        <label>👤 Username:</label> {{ form.username }}
-
-        <label>📧 Email:</label> {{ form.email }}
-
-        <label>📱 Phone Number:</label> {{ form.phone }}
-
-        <label>🧑‍⚕️ Register as:</label> {{ form.role }}
-
-        <label>🔐 Password:</label> {{ form.password1 }}
-
-        <label>🔐 Confirm Password:</label> {{ form.password2 }}
-
-        <button type="submit">✅ Register</button>
-    </form>
-
-    <p style="text-align: center; margin-top: 20px;">
-        Already have an account? <a href="{% url 'login' %}">Log in</a>
-    </p>
->>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
 </main>
 
 {% endblock %}

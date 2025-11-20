@@ -1,97 +1,79 @@
-<<<<<<< HEAD
 {% extends 'core/base.html' %}
-{% block content %}
+{% load static %}
 
-<!-- 🌟 Font Awesome for icons -->
+{% block content %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to right, #e0f7fa, #f1f8e9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-}
+/* Page layout */
+:root { --accent: #00796b; --accent-dark: #004d40; }
+body { margin: 0; font-family: 'Segoe UI',sans-serif; background: linear-gradient(to right,#e0f7fa,#f1f8e9); }
 
+/* Centered card */
 .login-box {
-  width: 360px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 30px 25px;
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 28px;
+  background: rgba(255,255,255,0.92);
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  animation: fadeIn 0.45s ease-in-out;
 }
 
+/* Heading */
 .login-box h2 {
-  color: #00796b;
-  margin-bottom: 20px;
-  font-size: 24px;
+  text-align: center;
+  color: var(--accent);
+  margin: 0 0 18px;
+  font-size: 22px;
 }
 
-.form-group {
-  position: relative;
-  margin-bottom: 20px;
-}
-
+/* Form fields */
+.form-group { position: relative; margin-bottom: 16px; }
 .form-group i {
-  position: absolute;
-  top: 50%;
-  left: 12px;
-  transform: translateY(-50%);
-  font-size: 16px;
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  font-size: 15px; color: #888;
 }
-
-.form-group .fa-user {
-  color: #007bff;
-}
-.form-group .fa-lock {
-  color: #e91e63;
-}
-
 .form-group input {
   width: 100%;
-  padding: 10px 10px 10px 38px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 15px;
-  background-color: #f9f9f9;
+  padding: 10px 12px 10px 40px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  background: #fafafa;
   box-sizing: border-box;
 }
 
-form button {
-  background-color: #00796b;
-  color: white;
+/* Button */
+button.submit-btn {
+  width: 100%;
   padding: 12px;
   border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  width: 100%;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  font-size: 15px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: transform .15s, background-color .15s;
+}
+button.submit-btn:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+/* Errors */
+ul.errorlist { list-style: none; padding: 0; margin: 8px 0 14px; }
+ul.errorlist li { color:#b00020; background:#fff0f0; padding:8px 10px; border-left:4px solid #c62828; border-radius:4px; margin-bottom:6px; }
+
+/* small screens */
+@media (max-width:420px) {
+  .login-box { margin: 30px 12px; padding: 20px; }
 }
 
-form button:hover {
-  background-color: #004d40;
-  transform: scale(1.03);
-}
-
-ul.errorlist {
-  list-style: none;
-  padding: 0;
-  margin-top: 10px;
-  color: #d32f2f;
-  font-size: 14px;
-}
+@keyframes fadeIn { from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;} }
 </style>
 
-<div class="login-box">
-  <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+<main class="login-box" role="main" aria-labelledby="loginHeading">
+  <h2 id="loginHeading"><i class="fas fa-sign-in-alt"></i> Login</h2>
 
   {% if form.errors %}
-    <ul class="errorlist">
+    <ul class="errorlist" aria-live="polite">
       {% for field in form %}
         {% for error in field.errors %}
           <li><strong>{{ field.label }}:</strong> {{ error }}</li>
@@ -103,155 +85,23 @@ ul.errorlist {
     </ul>
   {% endif %}
 
-  <form method="post" action="{% url 'login' %}">
+  <form method="post" action="{% url 'login' %}" novalidate>
     {% csrf_token %}
     <div class="form-group">
       <i class="fas fa-user"></i>
       {{ form.username }}
     </div>
+
     <div class="form-group">
       <i class="fas fa-lock"></i>
       {{ form.password }}
     </div>
-    <button type="submit"><i class="fas fa-arrow-right-to-bracket"></i> Log In</button>
+
+    <button type="submit" class="submit-btn"><i class="fas fa-arrow-right-to-bracket"></i> Log In</button>
   </form>
-</div>
-=======
-{% extends 'core/base.html' %} {% block content %}
 
-<style>
-    /* 🌈 Background and Layout */
-    
-    body {
-        margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        background: linear-gradient(to right, #e0f7fa, #f1f8e9);
-        color: #333;
-    }
-    /* 📦 Login Card */
-    
-    main {
-        max-width: 400px;
-        margin: 60px auto;
-        padding: 30px 25px;
-        background: rgba(255, 255, 255, 0.85);
-        border-radius: 12px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        backdrop-filter: blur(6px);
-        animation: fadeIn 0.6s ease-in-out;
-    }
-    /* 🧾 Heading */
-    
-    h2 {
-        text-align: center;
-        color: #00796b;
-        margin-bottom: 25px;
-        font-size: 24px;
-    }
-    /* 📝 Form Styling */
-    
-    form {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    form label {
-        font-weight: bold;
-        margin-top: 15px;
-        color: #004d40;
-    }
-    
-    form label[for="id_username"]::before {
-        content: "👤 ";
-    }
-    
-    form label[for="id_password"]::before {
-        content: "🔒 ";
-    }
-    
-    form input {
-        padding: 10px;
-        margin-top: 6px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        transition: box-shadow 0.3s ease;
-    }
-    
-    form input:focus {
-        outline: none;
-        box-shadow: 0 0 5px #80cbc4;
-    }
-    /* 🔘 Button */
-    
-    form button {
-        margin-top: 25px;
-        background-color: #00796b;
-        color: white;
-        padding: 10px 16px;
-        border: none;
-        border-radius: 6px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s, transform 0.2s;
-    }
-    
-    form button:hover {
-        background-color: #004d40;
-        transform: scale(1.05);
-    }
-    /* ❌ Error Messages */
-    
-    ul.errorlist {
-        padding-left: 20px;
-        margin-bottom: 20px;
-        list-style: none;
-    }
-    
-    ul.errorlist li {
-        color: #d32f2f;
-        font-size: 14px;
-        background-color: #ffebee;
-        padding: 8px 12px;
-        border-left: 4px solid #c62828;
-        border-radius: 4px;
-        margin-bottom: 6px;
-    }
-    /* ✨ Animation */
-    
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
-
-<main>
-    <h2>🔐 Login</h2>
-
-    {% if form.errors %}
-    <ul class="errorlist">
-        {% for field in form %} {% for error in field.errors %}
-        <li>⚠️ <strong>{{ field.label }}:</strong> {{ error }}</li>
-        {% endfor %} {% endfor %} {% for error in form.non_field_errors %}
-        <li>⚠️ {{ error }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        <label for="id_username">Username:</label> {{ form.username }}
-
-        <label for="id_password">Password:</label> {{ form.password }}
-
-        <button type="submit">➡️ Login</button>
-    </form>
+  <p style="text-align:center;margin-top:12px;font-size:14px;">
+    Don't have an account? <a href="{% url 'register' %}">Register</a>
+  </p>
 </main>
->>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
-
 {% endblock %}

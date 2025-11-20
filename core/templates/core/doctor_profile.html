@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {% extends 'core/base.html' %}
 {% load static %}
 {% block content %}
@@ -7,42 +6,43 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-body {
+  body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(to right, #e0f7fa, #f1f8e9);
     color: #333;
-}
+  }
 
-main {
+  main {
     max-width: 700px;
     margin: auto;
     padding: 30px;
     background-color: #ffffffee;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-}
+  }
 
-h2 {
+  h2 {
     text-align: center;
     color: #00796b;
     margin-bottom: 25px;
     font-size: 28px;
-}
+  }
 
-.profile-photo {
+  .profile-photo {
     width: 150px;
     height: 150px;
     object-fit: cover;
     border-radius: 50%;
     border: 3px solid #00796b;
     transition: transform 0.3s ease;
-}
-.profile-photo:hover {
-    transform: scale(1.05);
-}
+  }
 
-.delete-btn {
+  .profile-photo:hover {
+    transform: scale(1.05);
+  }
+
+  .delete-btn {
     background-color: #f44336;
     color: white;
     border: none;
@@ -51,12 +51,13 @@ h2 {
     cursor: pointer;
     font-size: 14px;
     margin-top: 10px;
-}
-.delete-btn:hover {
-    background-color: #d32f2f;
-}
+  }
 
-.upload-btn {
+  .delete-btn:hover {
+    background-color: #d32f2f;
+  }
+
+  .upload-btn {
     margin-top: 20px;
     background-color: #4CAF50;
     color: white;
@@ -65,245 +66,90 @@ h2 {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-}
-.upload-btn:hover {
-    background-color: #388e3c;
-}
+  }
 
-table {
+  .upload-btn:hover {
+    background-color: #388e3c;
+  }
+
+  table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 25px;
-}
-table td {
+  }
+
+  table td {
     padding: 12px 10px;
     vertical-align: top;
-}
-table td:first-child {
+  }
+
+  table td:first-child {
     font-weight: bold;
     width: 35%;
     color: #004d40;
-}
-input[type="file"] {
+  }
+
+  input[type="file"] {
     padding: 6px;
     border-radius: 4px;
     border: 1px solid #ccc;
-}
+  }
 </style>
 
 <main>
   <h2><i class="fas fa-user-md"></i> Welcome, Dr. {{ user.first_name }}</h2>
 
   {% if user.profile_photo %}
-      <div style="text-align: center;">
-          <img src="{{ user.profile_photo.url }}" alt="Profile Photo" class="profile-photo">
-          <form method="post" action="{% url 'delete_profile_photo' %}">
-              {% csrf_token %}
-              <button type="submit" class="delete-btn">
-                <i class="fas fa-trash-alt"></i> Delete Photo
-              </button>
-          </form>
-      </div>
+    <div style="text-align: center;">
+      <img src="{{ user.profile_photo.url }}" alt="Profile Photo" class="profile-photo">
+      <form method="post" action="{% url 'delete_profile_photo' %}">
+        {% csrf_token %}
+        <button type="submit" class="delete-btn">
+          <i class="fas fa-trash-alt"></i> Delete Photo
+        </button>
+      </form>
+    </div>
   {% else %}
-      <p style="text-align: center; color: #777;">
-        <i class="fas fa-image"></i> No profile photo uploaded yet.
-      </p>
+    <p style="text-align: center; color: #777;">
+      <i class="fas fa-image"></i> No profile photo uploaded yet.
+    </p>
   {% endif %}
 
   <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <table>
-          <tr>
-              <td><i class="fas fa-user"></i> First Name:</td>
-              <td>{{ form.first_name }}</td>
-          </tr>
-          <tr>
-              <td><i class="fas fa-user"></i> Last Name:</td>
-              <td>{{ form.last_name }}</td>
-          </tr>
-          <tr>
-              <td><i class="fas fa-envelope"></i> Email:</td>
-              <td>{{ form.email }}</td>
-          </tr>
-          <tr>
-              <td><i class="fas fa-phone"></i> Phone:</td>
-              <td>{{ form.phone }}</td>
-          </tr>
-          <tr>
-              <td><i class="fas fa-user-tag"></i> Role:</td>
-              <td>{{ form.role }}</td>
-          </tr>
-          <tr>
-              <td><i class="fas fa-upload"></i> Upload New Photo:</td>
-              <td><input type="file" name="profile_photo" accept="image/*"></td>
-          </tr>
-      </table>
+    {% csrf_token %}
+    <table>
+      <tr>
+        <td><i class="fas fa-user"></i> First Name:</td>
+        <td>{{ form.first_name }}</td>
+      </tr>
+      <tr>
+        <td><i class="fas fa-user"></i> Last Name:</td>
+        <td>{{ form.last_name }}</td>
+      </tr>
+      <tr>
+        <td><i class="fas fa-envelope"></i> Email:</td>
+        <td>{{ form.email }}</td>
+      </tr>
+      <tr>
+        <td><i class="fas fa-phone"></i> Phone:</td>
+        <td>{{ form.phone }}</td>
+      </tr>
+      <tr>
+        <td><i class="fas fa-user-tag"></i> Role:</td>
+        <td>{{ form.role }}</td>
+      </tr>
+      <tr>
+        <td><i class="fas fa-upload"></i> Upload New Photo:</td>
+        <td><input type="file" name="profile_photo" accept="image/*"></td>
+      </tr>
+    </table>
 
-      <div style="text-align: center;">
-        <button type="submit" class="upload-btn">
-          <i class="fas fa-cloud-upload-alt"></i> Upload & Save
-        </button>
-      </div>
-  </form>
-=======
-{% extends 'core/base.html' %} {% load static %} {% block content %}
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const style = document.createElement("style");
-        style.innerHTML = `
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(to right, #e0f7fa, #f1f8e9);
-            color: #333;
-        }
-
-        main {
-            max-width: 700px;
-            margin: auto;
-            padding: 30px;
-            background-color: #ffffffdd;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.05);
-            animation: fadeIn 0.6s ease-in-out;
-        }
-
-        h2 {
-            text-align: center;
-            color: #00796b;
-            margin-bottom: 25px;
-            font-size: 24px;
-        }
-
-        .profile-photo {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid #ccc;
-            margin-bottom: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        .profile-photo:hover {
-            transform: scale(1.05);
-        }
-
-        .delete-btn, .upload-btn {
-            border: none;
-            border-radius: 6px;
-            padding: 8px 16px;
-            font-size: 15px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .delete-btn {
-            background-color: #f44336;
-            color: white;
-        }
-
-        .delete-btn:hover {
-            background-color: #d32f2f;
-            transform: scale(1.05);
-        }
-
-        .upload-btn {
-            background-color: #4CAF50;
-            color: white;
-            margin-top: 10px;
-        }
-
-        .upload-btn:hover {
-            background-color: #388e3c;
-            transform: scale(1.05);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        table td {
-            padding: 12px;
-            vertical-align: top;
-        }
-
-        table td:first-child {
-            font-weight: bold;
-            width: 35%;
-            color: #004d40;
-        }
-
-        table td:first-child::before {
-            margin-right: 8px;
-        }
-
-        td.label-first-name::before { content: "🧑 "; }
-        td.label-last-name::before { content: "🧑 "; }
-        td.label-email::before { content: "📧 "; }
-        td.label-phone::before { content: "📞 "; }
-        td.label-role::before { content: "🩺 "; }
-        td.label-upload::before { content: "📷 "; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    `;
-        document.head.appendChild(style);
-    });
-</script>
-
-
-<main>
-    <h2>👨‍⚕️ Welcome, Dr. {{ user.first_name }}</h2>
-
-    {% if user.profile_photo %}
     <div style="text-align: center;">
-        <img src="{{ user.profile_photo.url }}" alt="Profile Photo" class="profile-photo">
-        <form method="post" action="{% url 'delete_profile_photo' %}">
-            {% csrf_token %}
-            <button type="submit" class="delete-btn">🗑️ Delete Photo</button>
-        </form>
+      <button type="submit" class="upload-btn">
+        <i class="fas fa-cloud-upload-alt"></i> Upload & Save
+      </button>
     </div>
-    {% else %}
-    <p style="text-align: center;">No profile photo uploaded yet.</p>
-    {% endif %}
-
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td class="label-first-name">First Name:</td>
-                <td>{{ form.first_name }}</td>
-            </tr>
-            <tr>
-                <td class="label-last-name">Last Name:</td>
-                <td>{{ form.last_name }}</td>
-            </tr>
-            <tr>
-                <td class="label-email">Email:</td>
-                <td>{{ form.email }}</td>
-            </tr>
-            <tr>
-                <td class="label-phone">Phone:</td>
-                <td>{{ form.phone }}</td>
-            </tr>
-            <tr>
-                <td class="label-role">Role:</td>
-                <td>{{ form.role }}</td>
-            </tr>
-            <tr>
-                <td class="label-upload">Upload New Photo:</td>
-                <td><input type="file" name="profile_photo" accept="image/*"></td>
-            </tr>
-        </table>
-
-        <button type="submit" class="upload-btn">📤 Upload & Save</button>
-    </form>
->>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
+  </form>
 </main>
 
 {% endblock %}
