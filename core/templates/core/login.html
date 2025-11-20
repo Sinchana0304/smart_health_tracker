@@ -1,0 +1,119 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<!-- 🌟 Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.login-box {
+  width: 360px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.login-box h2 {
+  color: #00796b;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.form-group i {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  font-size: 16px;
+}
+
+.form-group .fa-user {
+  color: #007bff;
+}
+.form-group .fa-lock {
+  color: #e91e63;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 10px 10px 38px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+}
+
+form button {
+  background-color: #00796b;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form button:hover {
+  background-color: #004d40;
+  transform: scale(1.03);
+}
+
+ul.errorlist {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  color: #d32f2f;
+  font-size: 14px;
+}
+</style>
+
+<div class="login-box">
+  <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+
+  {% if form.errors %}
+    <ul class="errorlist">
+      {% for field in form %}
+        {% for error in field.errors %}
+          <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <i class="fas fa-user"></i>
+      {{ form.username }}
+    </div>
+    <div class="form-group">
+      <i class="fas fa-lock"></i>
+      {{ form.password }}
+    </div>
+    <button type="submit"><i class="fas fa-arrow-right-to-bracket"></i> Log In</button>
+  </form>
+</div>
+
+{% endblock %}

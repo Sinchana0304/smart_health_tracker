@@ -1,0 +1,138 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<!-- 🌟 Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+  color: #333;
+}
+
+main {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffffdd;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+h2 {
+  text-align: center;
+  color: #00796b;
+  margin-bottom: 25px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form label {
+  font-weight: bold;
+  margin-top: 10px;
+  color: #004d40;
+}
+
+form input,
+form select {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  background-color: #f9f9f9;
+}
+
+form button {
+  margin-top: 10px;
+  background-color: #00796b;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form button:hover {
+  background-color: #004d40;
+  transform: scale(1.03);
+}
+
+ul {
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+ul li {
+  color: red;
+  font-size: 14px;
+}
+
+p a {
+  color: #00796b;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
+
+label i {
+  margin-right: 6px;
+  color: #00796b;
+}
+</style>
+
+<main>
+  <h2><i class="fas fa-user-plus"></i> Register</h2>
+
+  {% if form.errors %}
+    <ul>
+      {% for field in form %}
+        {% for error in field.errors %}
+          <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <label><i class="fas fa-user"></i> Username:</label>
+    {{ form.username }}
+
+    <label><i class="fas fa-envelope"></i> Email:</label>
+    {{ form.email }}
+
+    <label><i class="fas fa-phone"></i> Phone Number:</label>
+    {{ form.phone }}
+
+    <label><i class="fas fa-user-tag"></i> Register as:</label>
+    {{ form.role }}
+
+    <label><i class="fas fa-lock"></i> Password:</label>
+    {{ form.password1 }}
+
+    <label><i class="fas fa-lock"></i> Confirm Password:</label>
+    {{ form.password2 }}
+
+    <button type="submit"><i class="fas fa-user-check"></i> Register</button>
+  </form>
+
+  <p style="text-align: center; margin-top: 20px;">
+    Already have an account? <a href="{% url 'login' %}">Log in</a>
+  </p>
+</main>
+
+{% endblock %}
