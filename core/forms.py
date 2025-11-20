@@ -61,6 +61,25 @@ class PatientVisitForm(forms.ModelForm):
             'medicine_details': forms.Textarea(attrs={'rows': 3}),
         }
 
+
+
+# 🔹 Patient Profile Form
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+# Replace with your actual model if different
+
+class PatientForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'first_name', 'last_name', 'email', 'phone',
+            'location', 'date_of_birth', 'profile_photo'
+        ]
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+        }
+
 # 🔹 Health Log Submission Form
 class HealthLogForm(forms.ModelForm):
     class Meta:

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'core/base.html' %}
 {% block content %}
 
@@ -115,5 +116,142 @@ ul.errorlist {
     <button type="submit"><i class="fas fa-arrow-right-to-bracket"></i> Log In</button>
   </form>
 </div>
+=======
+{% extends 'core/base.html' %} {% block content %}
+
+<style>
+    /* 🌈 Background and Layout */
+    
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+        color: #333;
+    }
+    /* 📦 Login Card */
+    
+    main {
+        max-width: 400px;
+        margin: 60px auto;
+        padding: 30px 25px;
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        backdrop-filter: blur(6px);
+        animation: fadeIn 0.6s ease-in-out;
+    }
+    /* 🧾 Heading */
+    
+    h2 {
+        text-align: center;
+        color: #00796b;
+        margin-bottom: 25px;
+        font-size: 24px;
+    }
+    /* 📝 Form Styling */
+    
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    form label {
+        font-weight: bold;
+        margin-top: 15px;
+        color: #004d40;
+    }
+    
+    form label[for="id_username"]::before {
+        content: "👤 ";
+    }
+    
+    form label[for="id_password"]::before {
+        content: "🔒 ";
+    }
+    
+    form input {
+        padding: 10px;
+        margin-top: 6px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        transition: box-shadow 0.3s ease;
+    }
+    
+    form input:focus {
+        outline: none;
+        box-shadow: 0 0 5px #80cbc4;
+    }
+    /* 🔘 Button */
+    
+    form button {
+        margin-top: 25px;
+        background-color: #00796b;
+        color: white;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    
+    form button:hover {
+        background-color: #004d40;
+        transform: scale(1.05);
+    }
+    /* ❌ Error Messages */
+    
+    ul.errorlist {
+        padding-left: 20px;
+        margin-bottom: 20px;
+        list-style: none;
+    }
+    
+    ul.errorlist li {
+        color: #d32f2f;
+        font-size: 14px;
+        background-color: #ffebee;
+        padding: 8px 12px;
+        border-left: 4px solid #c62828;
+        border-radius: 4px;
+        margin-bottom: 6px;
+    }
+    /* ✨ Animation */
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<main>
+    <h2>🔐 Login</h2>
+
+    {% if form.errors %}
+    <ul class="errorlist">
+        {% for field in form %} {% for error in field.errors %}
+        <li>⚠️ <strong>{{ field.label }}:</strong> {{ error }}</li>
+        {% endfor %} {% endfor %} {% for error in form.non_field_errors %}
+        <li>⚠️ {{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <label for="id_username">Username:</label> {{ form.username }}
+
+        <label for="id_password">Password:</label> {{ form.password }}
+
+        <button type="submit">➡️ Login</button>
+    </form>
+</main>
+>>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
 
 {% endblock %}

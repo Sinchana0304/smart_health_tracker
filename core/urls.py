@@ -2,13 +2,20 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+<<<<<<< HEAD
 from django.contrib.auth import views as auth_views
+=======
+>>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
 
 urlpatterns = [
     # 🔹 Registration and Login
     path('register/', views.unified_register, name='register'),
     path('login/', views.login_view, name='login'),
+<<<<<<< HEAD
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+=======
+
+>>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
     # 🔹 Role-Based Profiles
     path('profile/patient/', views.patient_profile, name='patient_profile'),
     path('profile/patient/delete-photo/', views.delete_profile_photo, name='delete_profile_photo'),
@@ -62,7 +69,12 @@ urlpatterns = [
     path('videos/', views.view_exercise_videos, name='view_exercise_videos'),
     path('videos/watch/<int:video_id>/', views.watch_video, name='watch_video'),
     path('videos/delete/<int:video_id>/', views.delete_video, name='delete_video'),
+<<<<<<< HEAD
     path('therapist/videos/', views.exercise_video_library, name='exercise_video_library'),
     path('therapist/alerts/', views.emergency_alerts_page, name='emergency_alerts_page'),# Optional patient view
+=======
+
+    # Optional patient view
+>>>>>>> 45290ab91eb06c6a41551908d080d46b656a1eca
     # path('appointments/', views.view_appointments, name='view_appointments'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
